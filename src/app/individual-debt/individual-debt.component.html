@@ -1,0 +1,76 @@
+<form #debtForm="ngForm" class="debt" [class.confirmed]="debt.debtConfirmed && debtValid">
+    
+    <div class="form-group">
+        <input type="text" name="name" [value]="'Debt No ' + (index + 1)">
+    </div>
+    <div class="form-group">
+        <label>Type:</label>
+        <select class="form-control"  name="type" required
+            [disabled]="debt.debtConfirmed && debtValid"
+            [(ngModel)]="debt.type"
+            (change)="saveDebt(index)">
+            <option value="" disabled hidden>Please select...</option>
+            <option>Credit Card</option>
+            <option>Personal Loan</option>
+            <option>Secured Loan</option>
+            <option>Mortgage</option>
+            <option value="finance">Finance e.g. car finance</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Amount:</label>
+        <input class="form-control"  type="text" name="amount" required
+            [disabled]="debt.debtConfirmed && debtValid"
+            [(ngModel)]="debtFormatted.amount" 
+            (input)="debtFormatted.amount = utilities.formatCurrency(debtFormatted.amount);
+                debt.amount = utilities.unformat(debtFormatted.amount);
+                saveDebt(index)">
+    </div>
+
+    <div class="form-group" *ngIf="debt.type != 'Credit Card'">
+        <label>Term:</label>
+        <input class="form-control"  type="number" name="term" 
+            [disabled]="debt.debtConfirmed && debtValid"
+            [(ngModel)]="debt.term"
+            (input)="saveDebt(index)">
+    </div>
+
+    <div class="form-group" *ngIf="debt.type == 'Mortgage' || debt.type == 'finance'">
+        <label>Deposit:</label>
+        <input class="form-control"  type="text" name="deposit" 
+            [disabled]="debt.debtConfirmed && debtValid"
+            [(ngModel)]="debt.deposit"
+            (input)="debtFormatted.deposit = utilities.formatCurrency(debtFormatted.deposit);
+                debt.deposit = utilities.unformat(debtFormatted.deposit);
+                saveDebt(index)">
+    </div>
+
+    <div class="form-group">
+        <label>Monthly payments:</label>
+        <input class="form-control"  type="text" name="monthlyRepay" required
+            [disabled]="debt.debtConfirmed && debtValid"
+            [(ngModel)]="debtFormatted.monthlyRepay" 
+            (input)="debtFormatted.monthlyRepay = utilities.formatCurrency(debtFormatted.monthlyRepay);
+                debt.monthlyRepay = utilities.unformat(debtFormatted.monthlyRepay);
+                saveDebt(index)">
+    </div>
+
+    <div class="form-group" *ngIf="debt.type == 'Credit Card'">
+        <label>APR:</label>
+        <input class="form-control" type="text" name="apr" 
+            [disabled]="debt.debtConfirmed && debtValid"
+            [(ngModel)]="debtFormatted.apr" 
+            (input)="debtFormatted.apr = utilities.formatPercent(debtFormatted.apr);
+                debt.apr = utilities.unformat(debtFormatted.apr);
+                saveDebt(index)">
+    </div>
+
+    <p *ngIf="debtValid == false">Monthly payments are too low for this debt amount / term</p>
+
+    <div class="debt-action-holder">
+        <button type="button" class="btn btn-default" (click)="confirmDebt(index)" [ngClass]="debtForm.valid ? 'btn-primary' : 'btn-default'" [disabled]="!debtForm.valid" *ngIf="!debt.debtConfirmed">Confirm debt</button>
+        <button type="button" class="btn btn-info" *ngIf="debt.debtConfirmed" (click)="editDebt(index)">Edit debt</button>
+        <button type="button" class="btn btn-danger pull-right" *ngIf="index > 1" (click)="deleteDebt(index)">Remove debt</button>
+    </div>
+</form>
