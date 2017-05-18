@@ -38,6 +38,8 @@ export class IndividualDebtComponent implements OnInit {
     deleteDebt(index: number){
         this.debtDeleted.emit(index);
     }
+
+    
     ////////////////////////////
     // SAVE THE DEBT
     ////////////////////////////
