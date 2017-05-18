@@ -32,6 +32,9 @@ h1 {
     max-width: 100%;
     padding: 0 30px;
     margin: auto;
+    @media only screen and (max-width: 520px) {
+        padding: 0 15px;
+    }
 }
 
 .form-group {
@@ -152,6 +155,12 @@ app-individual-debt {
             position: relative;
             margin-bottom: 20px;
             width: 273px;
+            @media only screen and (max-width: 370px) {
+                width: 260px;
+            }
+            @media only screen and (max-width: 340px) {
+                width: 240px;
+            }
             &:before {
                 content: counter(steps);
                 display: inline-block;
@@ -211,6 +220,9 @@ li {
     @media only screen and (max-width: 991px) {
         grid-template-columns: 1fr 1fr;
     }
+    @media only screen and (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .debt-action-holder {
@@ -264,6 +276,9 @@ li {
     }
     @media only screen and (max-width: 991px) {
         grid-template-columns: 1fr 1fr;
+    }
+    @media only screen and (max-width: 720px) {
+        grid-template-columns: 1fr;
     }
 }
 
