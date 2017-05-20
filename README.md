@@ -1,6 +1,6 @@
 # Debt Calculator
-Debt calculator built with Angular 2, [demo here](https://nickmcburney.github.io/ng-debt-calculator/)
+Debt calculator built using the Angular CLI (Angular2)
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.30.
+[View Demo](https://nickmcburney.github.io/ng-debt-calculator/)
 
 ## NOT PRODUCTION READY
