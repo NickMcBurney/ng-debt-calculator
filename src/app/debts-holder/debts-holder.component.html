@@ -1,27 +1,14 @@
 <div class="debt-grid">
-     <div class="show-tablet">
-        <div class="debt">
-            <h3>How our calculator works</h3>
-            <ul>
-                <li>Enter a few details about any debts you have <small>You can add debts as required and must confirm atleast two</small></li>
-                <li>Confirm debts to include in calculation <small>You can edit / remove additional debts to exclude them</small></li>
-                <li>Calculate:
-                    <small>- Your total debt<br/>
-                        - Your total monthly payments<br/>
-                        - The total cost of borrowing<br/>
-                        - How long it will take to clear all debts
-                    </small> 
-                </li>
-            </ul>
-        </div>
-    </div>
+
+    <!-- Debts -->
     <div *ngFor="let debt of allDebts; let i = index" class="debt-item">
         <app-individual-debt [index]="i" [debt]="debt" (onUpdated)="debtUpdated($event)" (debtDeleted)="deleteDebt($event)"></app-individual-debt>
     </div>
-    <div class="debt-item">
-    <!--<div class="col-md-4 col-sm-6">-->
+
+    <!-- Help Box -->
+    <div class="debt-item debt-how-to">
         <div class="debt">
-            <div class="show-desktop">
+            <div class="">
                 <h3>How our calculator works</h3>
                 <ul>
                     <li>Enter a few details about any debts you have<small>You can add debts as required and must confirm atleast two</small></li>
@@ -43,7 +30,7 @@
 <div class="debt-result" 
     *ngIf="totals.totalDebtAmount > 0 && 
     totals.totalCostOfCredit >= 0 &&
-    allDebts[0].debtConfirmed">
+    (allDebts[0].debtConfirmed || allDebts[1].debtConfirmed)">
 
     <div class="debt-result-item">
         <h3>Debt amount:</h3>
