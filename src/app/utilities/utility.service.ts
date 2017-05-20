@@ -3,18 +3,26 @@ import {Injectable } from '@angular/core';
 @Injectable()
 export class Utility {
 
-	/////////////////////////
-	// FORMAT PERCENTAGES
-	/////////////////////////
-    public formatPercent(value:any) {
+	/**
+	 * Format value to percentage
+	 * @example
+	 * formatPercent(15);
+	 * returns "15%"
+	 * @returns {string} Returns the value formatted as percentage
+	*/
+    public formatPercent(value:any):string {
 		return value.replace(/%/g, "") + "%"
 	}
 
 
-	/////////////////////////
-	// FORMAT CURRENCY
-	/////////////////////////
-    public formatCurrency(value: any) {
+	/**
+	 * Format value to currency
+	 * @example
+	 * formatCurrency(2400);
+	 * returns "£2,400"
+	 * @returns {string} Returns the value formatted as currency
+	*/
+    public formatCurrency(value: any):string {
 		value = value.replace(/,/g, "");
 		value = value.replace(/£/g, "");
 		value += '';
@@ -34,10 +42,20 @@ export class Utility {
 	}
  
 
-	/////////////////////////
-	// FORMAT MONTHS
-	/////////////////////////
-	public formatMonths(months: number) {
+	/**
+	 * Format months to length of time
+	 * @example
+	 * formatMonths(24);
+	 * returns "2 years"
+	 * @example
+	 * formatMonths(30);
+	 * returns "2½ years"
+	 * @example
+	 * formatMonths(32);
+	 * returns "2 years and 8 months"
+	 * @returns {string} Returns the value formatted as length of time
+	*/
+	public formatMonths(months: number):string {
 		const years: number =  Math.floor(months / 12); // 1
 		const remainingMonths: number = months % 12; 
 		let formatted: string = "";
@@ -59,19 +77,30 @@ export class Utility {
 	}
 
 
-	/////////////////////////
-	// UNFORMAT VALUES
-	/////////////////////////
-	public unformat(value: string) {
+	/**
+	 * Unformat a string (currency or percentage)
+	 * @example
+	 * unformat("£2,000");
+	 * returns 2000
+	 * @example
+	 * unformat("15%");
+	 * returns 15
+	 * @returns {number} Returns the formatted value as number
+	*/
+	public unformat(value: string):number{
 		return Number(value.replace(/,/g, "").replace(/£/g, "").replace(/%/g, ""));
 	}
 
 
 
-	/////////////////////////
-	// CALCULATE TERM
-	/////////////////////////
-	public calculateTerm(apr: number, amount:number, monthly:number){
+	/**
+	 * Calculate term
+	 * @example
+	 * calculateTerm(10,100,15);
+	 * returns 7
+	 * @returns {number} Returns number of months (unformatted)
+	*/
+	public calculateTerm(apr: number, amount:number, monthly:number):number{
 		let $interestRate = apr,
 		$creditBalance = amount,
 		$monthlyRepayment = monthly;
@@ -88,10 +117,14 @@ export class Utility {
 	}
 
 
-	/////////////////////////
-	// CALCULATE TOTAL REPAID
-	/////////////////////////
-	public calculateTotalRepaid(monthly:number, term: number){
+	/**
+	 * Calculate total repaid
+	 * @example
+	 * calculateTotalRepaid(100, 24);
+	 * returns 2400
+	 * @returns {number} Returns unformatted total repaid amount
+	*/
+	public calculateTotalRepaid(monthly:number, term: number):number{
 		// calculate total paid
 		const total = monthly * term;
 		
@@ -101,10 +134,15 @@ export class Utility {
 	}
 
 
-	/////////////////////////
-	// CALCULATE CREDIT COST
-	/////////////////////////
-	public calculateCostOfCredit(amount: number, deposit: number, totalRepaid: number){
+	/**
+	 * Calculate cost of credit
+	 * Subtracts loan amount from the total repaid amount
+	 * @example
+	 * calculateTotalRepaid(1000, 0, 1500);
+	 * returns 500
+	 * @returns {number} Returns unformatted total cost of credit
+	*/
+	public calculateCostOfCredit(amount: number, deposit: number, totalRepaid: number):number{
 		let cost:number = 0;
 		if(deposit)
 			cost = totalRepaid - (amount - deposit);

@@ -1,6 +1,9 @@
 
-// debt class 
-// used to hold individual debt data
+/**
+ * Debt class
+ * used to hold individual debt data 
+*/
+
 export class Debt {
     constructor(
         public amount: number,
@@ -15,6 +18,10 @@ export class Debt {
     ) {  }
 }
 
+/**
+ * Debt Formatted class
+ * used to hold individual formatted debt data 
+*/
 export class DebtFormatted {
     constructor(
         public amount: string,

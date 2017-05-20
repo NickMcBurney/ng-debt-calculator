@@ -8,14 +8,22 @@ import { Debt, DebtFormatted } from '../utilities/debt';
 @Component({
     selector: 'app-debts-holder',
     templateUrl: './debts-holder.component.html',
-    styleUrls: ['./debts-holder.component.css']
+    styles: [``]
 })
 export class DebtsHolderComponent implements OnInit {
 
-
+    /**
+     * Array of debt objects
+    */
     allDebts: Debt[] = [ new Debt(null, null, null, null, null, null, null, null, false) ]
+    /**
+     * Array of debt objects holding formated debt values
+    */
     allDebtsFormatted: DebtFormatted[] = [ new DebtFormatted("", "", "", "", "", "") ]
 
+    /**
+     * Object which holds total amounts for all confirmed debts
+    */
     totals: any = {
         'totalDebtAmount': 0,
         'totalRepayments': 0,
@@ -30,6 +38,9 @@ export class DebtsHolderComponent implements OnInit {
         this.allDebtsFormatted.push(new DebtFormatted("", "", "", "", "", ""))
     }
 
+    /**
+     * Updates individual debt and recalculates total amounts
+    */
     debtUpdated(data) {
         // set debt data to correct array item
         this.allDebts[data.index] = data.debt
@@ -37,16 +48,25 @@ export class DebtsHolderComponent implements OnInit {
         this.calculateTotalDebts(this.allDebts)
     }
     
+    /**
+     * Adds a new debt object and formatted debt object
+    */
     addNewDebt() {
         this.allDebts.push(new Debt(null, null, null, null, null, null, null, null, false))
         this.allDebtsFormatted.push(new DebtFormatted("", "", "", "", "", ""))
     }
 
+    /**
+     * Deletes the debt provided in event and recalculates total debts
+    */
     deleteDebt(index:number) {
         this.allDebts.splice(index, 1);
         this.calculateTotalDebts(this.allDebts)
     }
 
+    /**
+     * Provided an array of debts the function will loop through each and update totals object
+    */
     calculateTotalDebts(debts: Debt[]) {
         this.totals.totalDebtAmount = 0
         this.totals.totalRepayments = 0

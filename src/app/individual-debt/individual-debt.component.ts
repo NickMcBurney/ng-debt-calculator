@@ -7,47 +7,81 @@ import { Debt, DebtFormatted } from '../utilities/debt';
 @Component({
     selector: 'app-individual-debt',
     templateUrl: './individual-debt.component.html',
-    styleUrls: ['./individual-debt.component.css'],
-    //providers: [Utility]
+    styles: [``],
 })
 export class IndividualDebtComponent implements OnInit {
+    /**
+     * Index number prodived by parent component
+    */
     @Input() index: number;
+    /**
+     * Debt object used to store individual debt information provided by Parent
+    */
     @Input() debt: Debt;
+    /**
+     * Outputs onUpdated() event which triggers total amounts recalculations
+    */
     @Output() onUpdated = new EventEmitter<any>();
+    /**
+     * Outputs debtDeleted() event which removes debt from debts array and triggers total amounts recalculations
+    */
     @Output() debtDeleted = new EventEmitter<any>();
+    /**
+     * Checks if component debt form is valid
+    */
     @ViewChild('debtForm') debtForm;
-
-    debtConfirmed: boolean = false;
+    /**
+     * Boolean which holds debt form valid state
+    */
     debtValid: boolean = null;
+    /**
+     * Boolean which holds debt confirmed state
+    */
+    debtConfirmed: boolean = false;
+    /**
+     * Object holding formatted debt values
+    */
     debtFormatted: DebtFormatted = new DebtFormatted("", "", "", "", "", "")
 
+    /**
+     * constructor includes utilities services which are used in the component template
+    */
     constructor(public utilities: Utility) {
     }
     
-    
+    /**
+     * Confirms the debt and trigger saveDebt function
+    */
     confirmDebt(index: number){
         this.debtConfirmed = true;
         this.saveDebt(index)
     }
 
+    /**
+     * Unconfirms debt and trigger saveDebt function
+    */
     editDebt(index: number){
         this.debtConfirmed = false;
         this.saveDebt(index)
     }
 
+    /**
+     * Emit debtDeleted event to {@link DebtsHolderComponent}
+     * DebtsHolderComponent will then remove this debt from debts array
+    */
     deleteDebt(index: number){
         this.debtDeleted.emit(index);
     }
 
     
-    ////////////////////////////
-    // SAVE THE DEBT
-    ////////////////////////////
-    // calculate debt term if type = credit card
-    // calculate debt total repaid
-    // calculate debt cost of credit
-    // create debt package
-    // send debt package to parent component (via eventEmitter)
+    /**
+     * SAVE THE DEBT
+     * calculate debt term if type = credit card
+     * calculate debt total repaid
+     * calculate debt cost of credit
+     * create debt package
+     * send debt package to parent component (via eventEmitter)
+    */
     saveDebt(index: number) {        
         // calculate time to repay (if not provided e.g. credit card)
         if (this.debt.type == "Credit Card") {
